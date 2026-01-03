@@ -1,0 +1,48 @@
+{% extends 'game/base.html' %}
+
+{% block title %}Rooms — Song Guess{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="card">
+      <h2>Create a room</h2>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="create" />
+        <label>Room name (optional)</label>
+        <input name="name" placeholder="Friday night" />
+        <div style="height: 12px"></div>
+        <button type="submit">Create room</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Join a room</h2>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="join" />
+        <label>Room code</label>
+        <input name="code" placeholder="ABC123" />
+        <div style="height: 12px"></div>
+        <button type="submit">Join</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Your rooms</h2>
+    {% if rooms %}
+      <ul>
+        {% for room in rooms %}
+          <li>
+            <a href="{% url 'site_room' room_code=room.code %}">
+              {{ room.code }}{% if room.name %} — {{ room.name }}{% endif %}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No rooms yet.</p>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'game/base.html' %}
+
+{% block title %}Room {{ room.code }} — Song Guess{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <h2>Room {{ room.code }}{% if room.name %} — {{ room.name }}{% endif %}</h2>
+    <p><a href="{% url 'site_rooms' %}">← Back to rooms</a></p>
+  </div>
+
+  <div class="row">
+    <div class="card">
+      <h3>Round 1 controls</h3>
+      <form method="post" style="margin-bottom: 10px;">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="create_order" />
+        <button class="secondary" type="submit">Create play order</button>
+      </form>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="reveal" />
+        <button type="submit">Reveal + score</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Leaderboard</h3>
+      {% if leaderboard %}
+        <ul>
+          {% for m in leaderboard %}
+            <li>{{ m.user.username }} — {{ m.score }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No members.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card">
+      <h3>Submissions</h3>
+      {% if submissions %}
+        <ul>
+          {% for s in submissions %}
+            <li>
+              {{ s.original_filename|default:s.file.name }} — uploader: {{ s.uploader.username }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No submissions yet.</p>
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <h3>Play order</h3>
+      {% if play_order %}
+        <ul>
+          {% for rs in play_order %}
+            <li>#{{ rs.order_index }} — submission {{ rs.submission_id }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>Not created yet.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

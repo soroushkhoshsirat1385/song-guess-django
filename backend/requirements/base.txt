@@ -1,0 +1,7 @@
+# Core runtime deps for the Django backend
+Django
+channels
+# ASGI server used by Channels (also fine for local dev)
+daphne
+# PostgreSQL driver (psycopg3)
+psycopg[binary]

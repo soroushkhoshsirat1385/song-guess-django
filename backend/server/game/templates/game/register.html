@@ -1,0 +1,22 @@
+{% extends 'game/base.html' %}
+
+{% block title %}Register — Song Guess{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <h2>Register</h2>
+    <form method="post">
+      {% csrf_token %}
+      <label>Username</label>
+      <input name="username" autocomplete="username" required />
+      <div style="height: 10px"></div>
+      <label>Password</label>
+      <input name="password" type="password" autocomplete="new-password" required />
+      <div style="height: 12px"></div>
+      <button type="submit">Create account</button>
+    </form>
+    <p style="margin-top: 12px">
+      Already have an account? <a href="{% url 'site_login' %}">Login</a>
+    </p>
+  </div>
+{% endblock %}
