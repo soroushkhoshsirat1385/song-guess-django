@@ -1,2 +1,0 @@
-first taks : 
-initial github repo and configure docker and CI?CD 
