@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: songgame
+      POSTGRES_USER: songgame
+      POSTGRES_PASSWORD: songgame
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+
+volumes:
+  postgres_data:
